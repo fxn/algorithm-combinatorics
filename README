@@ -1,0 +1,32 @@
+INSTALLATION
+============
+
+If you have root on a Unix system it is enough to run this command:
+
+    % cpan Algorithm::Combinatorics
+
+To install this module by hand, run the following commands:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+Note that a C compiler is needed.
+
+
+USAGE
+=====
+
+Documentation is available the standard way:
+
+    perldoc Algorithm::Combinatorics
+
+
+COPYRIGHT AND LICENCE
+=====================
+
+Copyright (C) 2005-2009 Xavier Noria
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
