@@ -23,6 +23,7 @@
 #define INCR(av, i)     (SETIV(av, i, 1 + GETIV(av, i)))
 #define GETAV(avptr)    ((AV*) SvRV(avptr))
 
+
 /**
  * Swap the ith and jth elements in av.
  *
@@ -388,9 +389,9 @@ int __next_partition_of_size_p(SV* k_avptr, SV* M_avptr, int p)
     return -1;
 }
 
-/* 
+/*
  * This subroutine has been copied from List::PowerSet.
- * 
+ *
  * It uses a vector of bits "odometer" to indicate which elements to include
  * in each iteration. The odometer runs and eventually exhausts all possible
  * combinations of 0s and 1s.
@@ -404,7 +405,7 @@ AV* __next_subset(SV* data_avptr, SV* odometer_avptr)
     IV adjust    = 1;
     int i;
     IV n;
-    
+
     for (i = 0; i <= len_data; ++i) {
         n = GETIV(odometer, i);
         if (n) {
@@ -415,8 +416,8 @@ AV* __next_subset(SV* data_avptr, SV* odometer_avptr)
             SETIV(odometer, i, adjust);
         }
     }
-    
-    return subset;
+
+    return (AV*) sv_2mortal((SV*) subset);
 }
 
 /** -------------------------------------------------------------------
@@ -430,12 +431,6 @@ PROTOTYPES: DISABLE
 
 int
 __next_combination(tuple_avptr, max_n)
-    SV* tuple_avptr
-    int max_n
-
-SV*
-__next_combination_new(data_avptr, tuple_avptr, max_n)
-    SV* data_avptr
     SV* tuple_avptr
     int max_n
 

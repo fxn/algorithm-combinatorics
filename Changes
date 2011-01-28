@@ -1,5 +1,11 @@
 Revision history for Algorithm-Combinatorics
 
+0.26 Jan 28 2011
+
+    * Fixes a memory leak in subsets(), RT#65207
+
+    * Updates Copyright
+
 0.25 Nov 30 2007
 
     * Improved speed of subsets() copying the algorithm in List::PowerSet.
