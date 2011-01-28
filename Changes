@@ -2,9 +2,11 @@ Revision history for Algorithm-Combinatorics
 
 0.26 Jan 28 2011
 
-    * Fixes a memory leak in subsets(), RT#65207
+    * Fixes a memory leak in subsets(), thanks to Oliver Seeliger. [closes RT#65207]
 
-    * Updates Copyright
+    * Updates Copyright.
+
+    * README documents now the module itself, better for GitHub.
 
 0.25 Nov 30 2007
 
