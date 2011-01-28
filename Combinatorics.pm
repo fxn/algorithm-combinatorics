@@ -3,7 +3,7 @@ package Algorithm::Combinatorics;
 use 5.006002;
 use strict;
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 use XSLoader;
 XSLoader::load('Algorithm::Combinatorics', $VERSION);
@@ -68,9 +68,9 @@ sub combinations_with_repetition {
 sub subsets {
     my ($data, $k) = @_;
     __check_params($data, $k, 1);
-    
+
     return combinations($data, $k) if defined $k;
-    
+
     my $finished = 0;
     my @odometer = (1) x @$data;
     my $iter = Algorithm::Combinatorics::Iterator->new(sub {
@@ -79,7 +79,7 @@ sub subsets {
         $finished = 1 if @$subset == 0;
         $subset;
     });
-    
+
     return __contextualize($iter);
 }
 
@@ -167,10 +167,10 @@ sub permutations {
 sub circular_permutations {
     my ($data) = @_;
     __check_params($data, 0);
-    
+
     return __contextualize(__once_iter())         if @$data == 0;
     return __contextualize(__once_iter([@$data])) if @$data == 1 || @$data == 2;
-    
+
     my @indices = 1..(@$data-1);
     my $iter = Algorithm::Combinatorics::Iterator->new(sub {
         __next_permutation(\@indices) == -1 ? undef : [ @{$data}[0, @indices] ];
@@ -227,15 +227,15 @@ sub partitions {
 sub __partitions_of_all_sizes {
     my ($data) = @_;
     __check_params($data, 0);
-    
+
     return __contextualize(__once_iter()) if @$data == 0;
-    
+
     my @k = (0) x @$data;
     my @M = (0) x @$data;
     my $iter = Algorithm::Combinatorics::Iterator->new(sub {
-       __next_partition(\@k, \@M) == -1 ? undef : __slice_partition(\@k, \@M, $data); 
+       __next_partition(\@k, \@M) == -1 ? undef : __slice_partition(\@k, \@M, $data);
     }, __slice_partition(\@k, \@M, $data));
-    
+
     return __contextualize($iter);
 }
 
@@ -244,7 +244,7 @@ sub __partitions_of_all_sizes {
 sub __partitions_of_size_p {
     my ($data, $p) = @_;
     __check_params($data, $p);
-    
+
     return __contextualize(__null_iter()) if $p < 0;
     return __contextualize(__once_iter()) if @$data == 0 && $p == 0;
     return __contextualize(__null_iter()) if $p == 0;
@@ -253,16 +253,16 @@ sub __partitions_of_size_p {
         carp("Parameter k is greater than the size of data");
         return __contextualize(__null_iter());
     }
-    
+
     my $q = @$data - $p + 1;
     my @k = (0) x $q;
     my @M = (0) x $q;
     push @k, $_ - $q + 1 for $q..(@$data-1);
     push @M, $_ - $q + 1 for $q..(@$data-1);
     my $iter = Algorithm::Combinatorics::Iterator->new(sub {
-       __next_partition_of_size_p(\@k, \@M, $p) == -1 ? undef : __slice_partition_of_size_p(\@k, $p, $data); 
+       __next_partition_of_size_p(\@k, \@M, $p) == -1 ? undef : __slice_partition_of_size_p(\@k, $p, $data);
     }, __slice_partition_of_size_p(\@k, $p, $data));
-    
+
     return __contextualize($iter);
 }
 
@@ -308,7 +308,7 @@ sub __check_params {
     if (!defined($type) || $type ne "ARRAY") {
         croak("Parameter data is not an arrayref");
     }
-    
+
     carp("Parameter k is negative") if !$k_is_not_required && $k < 0;
 }
 
@@ -415,7 +415,7 @@ Algorithm::Combinatorics - Efficient generation of combinatorial sequences
 
 =head1 VERSION
 
-This documentation refers to Algorithm::Combinatorics version 0.25.
+This documentation refers to Algorithm::Combinatorics version 0.26.
 
 =head1 DESCRIPTION
 
@@ -551,7 +551,7 @@ Note that
 is equivalent to
 
     variations(\@data, scalar @data);
-    
+
 The number of variations of C<n> elements taken in groups of C<k> is:
 
     v(n, k) = 1,                        if k = 0
@@ -813,7 +813,7 @@ Xavier Noria (FXN), E<lt>fxn@cpan.orgE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2005-2007 Xavier Noria, all rights reserved.
+Copyright 2005-2011 Xavier Noria, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
